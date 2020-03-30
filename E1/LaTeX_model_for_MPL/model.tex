@@ -1,0 +1,1478 @@
+%A LaTeX model for SYSU General Phys. Lab. by Probfia Gao.
+%用XeLaTeX编译
+\documentclass[11pt,a4paper]{ctexart}
+
+%在下面补全实验名，例如 实验BB3 光电效应实验。
+\newcommand{\ExpeName}{实验E1 低温技术平台与高温超导研究}
+
+\usepackage{fancyhdr}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage[hmargin=1.25in,vmargin=1in]{geometry}
+\usepackage{pdfpages}
+\usepackage[colorlinks,
+            linkcolor=red,
+		 urlcolor=purple]{hyperref}
+\usepackage{cleveref}
+\usepackage{float}
+
+
+\crefname{equation}{}{}
+\crefname{figure}{图}{图}
+\crefname{footnote}{注释}{注释}
+\crefname{table}{表}{表}
+
+%\cpic{<尺寸>}{<文件名>}}用于生成居中的图片。
+\newcommand{\cpic}[2]{
+\begin{center}
+\includegraphics[scale=#1]{#2}
+\end{center}
+}
+
+%\cpicn{<尺寸>}{<文件名>}{<注释>}用于生成居中且带有注释的图片，其label为图片名。
+\newcommand{\cpicn}[3]
+{
+\begin{figure}[H]
+\cpic{#1}{#2}
+\caption{#3\label{#2}}
+\end{figure}
+}
+
+\newcommand{\beq}{\begin{equation}}
+\newcommand{\eeq}{\end{equation}}
+\newcommand{\bea}{\begin{equation}\begin{aligned}}
+\newcommand{\eea}{\end{aligned}\end{equation}}
+
+%输入单位和数学常数
+%下面所有命令需在公式环境下使用
+\newcommand{\e}{\mathrm{e}}   %自然常数e = \e
+\newcommand{\im}{\mathrm{i}}   %虚数单位i = \im
+\newcommand{\meter}{\mathrm{m}}      %单位/前缀 = \单位/前缀英文名
+\newcommand{\newton}{\mathrm{N}}  
+\newcommand{\joule}{\mathrm{J}}
+\newcommand{\second}{\mathrm{s}}
+\newcommand{\gram}{\mathrm{g}}
+\newcommand{\ampere}{\mathrm{A}}
+\newcommand{\kilo}{\mathrm{k}}
+\newcommand{\milli}{\mathrm{m}}
+\newcommand{\kelvin}{\mathrm{K}}
+\newcommand{\mole}{\mathrm{mol}}
+\newcommand{\volt}{\mathrm{V}}
+\newcommand{\nano}{\mathrm{n}}
+\newcommand{\degreeC}{^\circ \mathrm{C}}  %摄氏度符号 = \degreeC
+
+
+\newcommand{\reals}{\mathbb{R}}
+\newcommand{\complexs}{\mathbb{C}}
+\newcommand{\ints}{\mathbb{Z}}
+%\newcommand{\dim}{\mathrm{dim\ }}
+\newcommand{\up}{\uparrow}
+\newcommand{\down}{\downarrow}
+\newcommand{\del}{\vec \nabla}
+\newcommand{\su}{\mathfrak{su}}
+\newcommand{\so}{\mathfrak{so}}
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\diag}{diag}
+\newcommand{\card}{\mathrm{card \ }}
+\newcommand{\mani}{\mathcal{M}}
+\newcommand{\lag}{\mathcal{L}}
+\newcommand{\ham}{\mathcal{H}}
+\def\secpage#1#2{\begin{frame}\bch\bcenter{\bf \Huge #1} \skipline \tbox{#2}\ecenter\ech\end{frame}}
+\newcommand{\mat}[1]{\begin{pmatrix}#1\end{pmatrix}}
+\newcommand{\mev}{\ {\rm MeV}}
+\newcommand{\pfrac}[2]{\frac{\partial #1}{\partial #2}}
+
+\newcommand{\unit}[1]{\rm \ #1}
+\newcommand{\emptyline}{\par \ \\ }
+
+\newtheorem{que}{思考题}[section]
+\newtheorem{ans}{解答}[section]
+
+\pagestyle{fancy}
+
+\fancyhead[L]{\footnotesize{中山大学物理与天文学院近代物理实验}}
+\fancyhead[R]{\footnotesize{\ExpeName}}
+\fancyfoot[C]{\thepage}
+
+\begin{document}
+%第一页
+\cpic{0.255}{e1}%学生信息和计分表格
+\begin{table}[H]
+\centering
+\begin{tabular}{|p{32mm}|p{32mm}|p{32mm}|p{32mm}|}
+\hline
+年级、专业： & 17级 物理学 & 组号： & 实验班6 \\ \hline
+姓名： & 高寒 & 学号： & 17353019 \\ \hline
+日期： & \today & 教师签名： &  \\ \hline
+\end{tabular}
+\end{table}
+\begin{center}
+\LARGE\textbf{{\ExpeName}}
+\end{center}
+\large{【实验报告注意事项】}
+\begin{enumerate}
+ \item 实验报告由三部分组成：
+ \begin{enumerate}
+  \item[1)]预习报告：（提前一周）认真研读\textbf{\uline{实验讲义}}，弄清实验原理；实验所需的仪器设备、用具及其使用（强烈建议到实验室预习），完成讲义中的预习思考题；了解实验需要测量的物理量，并根据要求提前准备实验记录表格（由学生自己在实验前设计好，可以打印）。预习成绩低于50\%者不能做实验{\color{red} (实验D2和D3需要提前一周的周四完成预习报告交任课老师批改，批改通过后，才允许做实验)}。
+
+  \item[2)]实验记录：认真、客观记录实验条件、实验过程中的现象以及数据。实验记录请用珠笔或者钢笔书写并签名（{\color{red}用铅笔记录的被认为无效}）。{\color{red}保持原始记录，包括写错删除部分，如因误记需要修改记录，必须按规范修改。}（不得输入电脑打印，但可扫描手记后打印扫描件）；离开前请实验教师检查记录并签名。
+  \item[3)]分析讨论：处理实验原始数据（学习仪器使用类型的实验除外），对数据的可靠性和合理性进行分析；按规范呈现数据和结果（图、表），包括数据、图表按顺序编号及其引用；分析物理现象（含回答实验思考题，写出问题思考过程，必要时按规范引用数据）；最后得出结论。
+ \end{enumerate}
+ \textbf{实验报告}就是预习报告、实验记录、和数据处理与分析合起来，加上本页封面。
+ \item 每次完成实验后的一周内交\textbf{实验报告}。
+ \item 除实验记录外，实验报告其他部分建议双面打印。
+\end{enumerate}
+\ 
+\\
+\ 
+
+\begin{flushright}                                                           %模板作者
+\tiny{
+A \LaTeX \ model for Modern Phys. Lab., SPA, SYSU by \em{\href{https://www.weibo.com/3532532974/profile?rightmod=1&wvr=6&mod=personinfo&is_all=1}{Probfia} Gao.}
+}
+\end{flushright}
+
+\newpage
+\tableofcontents
+\newpage
+\section{预习报告}
+\subsection{【实验目的】}
+\begin{enumerate}
+\item 学习基本的低温技术，掌握深冷温区的获得和测量方法。
+\item
+掌握超导电性的两个基本特征:零电阻和迈斯纳效应，认识磁场对超导临界温度的影响，对宏观量子化有一个初步的认识;学习多变量对研究对象之影响的研究方法。
+\item
+学习将弱信号测量技术应用于超导转变的测量；直流四引线法用于零电阻特性测量，交流磁化率用于迈斯纳效应测量，学习为测量提供磁场条件。
+\item
+复习巩固信号提取方法之“本底扣除”，包括硬件设计中扣除和数据处理时的扣除。
+\item
+巩固和加深数据采集系统的认识，学习用 LabView 管理实验。
+\item
+(选)学习通过电磁铁获得强磁场的方法，了解磁场强度、分布均匀性与电磁铁的磁隙宽度的关系。
+\end{enumerate}
+\subsection{【实验用具】}
+\begin{table}[H]
+\cpic{0.48}{equip}
+\caption{超导实验实验仪器用具}
+\end{table}
+\subsection{【实验原理】}
+\subsubsection{超导}
+超导是一个热力学态，来源自$U(1)$对称性自发破缺\cite{qftga,cmft}。BCS理论是一个用电声相互作用描述超导的场论模型，其拉氏量中包含电声相互作用项
+\beq
+\lag_I = -g \bar{\psi} \psi \phi
+\eeq
+从而给出电声耦合，其$t$道费曼图的形式与QED非常相似，只是媒介子由自旋1的光子换成了自旋0的声子。而我们知道，自旋1波色子给出的相互作用是排斥的，而自旋0和自旋2（引力子）给出的相互作用是吸引的\cite{azqft}，从而形成了Cooper对。
+\par
+高温超导是指那些超导转变临界温度超过BCS理论上限的超导体。
+\par
+超导中有两个重要的现象，零电阻效应和麦斯纳效应。这两个效应可以由唯象的伦敦方程给出\cite{ed}。在温度$T<T_c$下，超导体的电阻趋近于0，磁化率趋近于$-1$。实验中用四引线法测量电阻，用互感法测量磁化率。值得指出的是，麦斯纳效应与历史无关，无论外场施加与超导前后，都没有磁感线能够进入超导体内部。
+\par
+无外电流时在外场下的超导体，其向超导态的相变退化为一个一级相变，此时，临界温度随外场变化，可以由热力学计算出\cite{ed,ssp}依赖关系
+\beq
+T(H) = T_c \sqrt{ 1 - \frac{H}{H_c}}
+\eeq
+$H_c$是临界磁场，外场大于$H_c$时，无论温度再低，都不会发生超导；反过来，温度大于$T_c \equiv T(H=0)$时，无论磁场再小也都不会发生超导，这是一个平凡的事实。此外外电流也会影响相变温度，但在实验中用交流四线法测量电阻可以认为电流的影响较小。
+\subsubsection{低温技术和强磁场技术}
+低温技术分制冷和隔热两个技术，本实验用液氮或制冷机创造低温环境（制冷），用一块防辐射屏进行隔热，这块防辐射屏起到一个类似于反射的作用，从而使得漏热大概减小一般。实验中用Pt1000测温，这一技术在基础物理实验1已经接触过了，不再赘述。
+\par
+实验中用实验平台中的电磁铁产生磁场，使用FIELD模式，可以自动消磁，但需要等待比较长的时间。此外，设定的磁场和实际的磁场值由于位置差别可能存在偏差，但这一偏差理应是一个小量，如果需要也可以用特斯拉计矫正。或者直接用CURRENT模式，标定样品位置磁场和电流的关系后进行实验。
+\subsubsection{电阻和磁化率的测量}
+实验用四引线法测量电阻来减小系统误差，这一测量的原理在基础物理实验2中接触过，不再赘述。实验中需要改变电流方向测量两次电压，电阻的测量值与电流$I$，正向电压$V_+$和反向测量时电压$V_-$的关系是\cite{lec}
+\beq
+R = \frac{V_+ - V_-}{2I}
+\eeq
+\par
+磁化率$\chi \equiv \frac M H$在实际操作中很难测量，因此我们测量的是物体的交流磁化率
+\beq
+\chi \equiv \pfrac{M}{H}
+\eeq
+并利用两个反接互感线圈的电动势差来间接测量之。结果为
+\beq
+\chi = \frac{1}{k_1 k_2 \mu_0} \frac{V_2}{0.1 {\rm \frac{A}{V}}\omega V_0} (\sin \Delta \theta + i \cos \Delta \theta)
+\eeq
+$\Delta \theta = \theta - \theta_I$，$\theta$从锁相放大器中读出，$\theta_I$是稳流输出源的相位，也可以用锁相放大器事先测得，$V_0,V_2$分别是稳流输出源的输入电压幅值和锁相放大器测得的电压幅值。前面的常数可以事先标定。
+
+\subsection{【预习报告思考题】}
+\subsubsection{实验目的1}
+
+\begin{que}
+深低温系统为什么要抽真空？真空度要求多高？
+\end{que}
+\begin{ans}
+主要是极大减小传导和对流带来的漏热，也可以防止水蒸气在低温下凝结损坏仪器，阻止制冷剂循环等。真空度不低于$5\unit{Pa}$。
+\end{ans}
+\begin{que}
+真空泵产生一定的噪声，在达到真空要求后，是否可以关真空泵？关真空泵前，是否要先关真空阀门？
+\end{que}
+\begin{ans}
+可以；是的。
+\end{ans}
+\begin{que}
+为什么要安装屏蔽罩（防辐射屏）？屏蔽罩用哪一类材料最好？
+\end{que}
+\begin{ans}
+屏蔽屏可以将环境向样品的辐射漏热减小约一半，如\cref{rad_red}。由原理可见，屏蔽屏最好选用（对热辐射）不透明且热容小的金属材料。
+\cpicn{0.1}{rad_red}{屏蔽罩原理示意图}
+\end{ans}
+\begin{que}
+请估计直径为$12\unit{mm}$、长为$100\unit{mm}$，温度为$4\unit{K}$的恒温器在无防辐射屏时的漏热约为多少？在采用一层防辐射屏后，其与环境之间的辐射漏热减少了多少？如果将防辐射屏的温度降到液氮温度（$77\unit{K}$），则该防辐射屏的辐射漏热又为多少？
+\end{que}
+\begin{ans}
+设环境温度为室温$T_E \approx 300\unit{K}$，恒温器的侧面积为
+\beq
+S = \pi D l = \pi \times 12 \times 100 \unit{mm^2} = 3.77\times 10^{-3}\unit{m^2}
+\eeq
+Stefen-Boltzmann 常数$\sigma = 5.67\times 10^{-8} \unit{W \cdot m^{-2} K^{-4}}$\cite{them_phys,tdstat,stat1,dtsp}，漏热为
+\beq
+J = \sigma(T_E^4 - T^4) S = 1.7 \unit{W}
+\eeq
+加入防辐射屏后的漏热减小一半，约为
+\beq
+J' = \frac{1}{2} J = 0.9\unit{W}
+\eeq
+如果防辐射屏的温度为液氮温度，漏热为
+\beq
+J'' = \sigma(T_{LN}^4 - T^4) S = 0.0075 \unit{W}
+\eeq
+\end{ans}
+\begin{que}
+铂电阻温度计位置不在样品旁边，有什么因素会影响样品温度偏离温度计的温度？偏离有多大？能否通过建模进行定量分析？
+\end{que}
+\begin{ans}
+主要是由冷指材料热导率，偏离位置的距离和温度决定，但预期偏离不会很大。可以通过COMSOL模拟或者解（稳态下的）热传导方程
+\beq
+\nabla^2 T = 0
+\eeq
+来计算出这一部分修正。待读数稳定后再测量也有助于减小这一部分误差。
+\end{ans}
+
+\subsubsection{实验目的3}
+
+\begin{que}
+高磁场下电磁铁长时间工作会导致线圈温度升高，如何在满足实验需求的同时，使线圈电流最小、且实验时间最短？然后如何保护自己避免烫伤、又不影响线圈散热？
+\end{que}
+\begin{ans}
+可以预先估计一个$H_c$的大小来控制实验范围，使得磁场不太大并缩短测量时间。同时应该打开实验室空调并尽量调低温度。注意安全，不要用手碰线圈。
+\end{ans}
+
+\begin{que}
+本实验中样品位置的磁场与霍尔探头测量的磁场有多大的偏差？如何校正？校正时电磁铁电源能用“磁场模式”吗？为什么？
+\end{que}
+\begin{ans}
+据调研，偏差大概在$\sim 0.1$左右，可以通过标定FIELD模式下设定的磁场和在样品处用霍尔探头测量的磁场（根据量纲分析，两者应该很大程度上呈线性关系）或者标定CURRENT模式下设定的电流和在样品处用霍尔探头测量的磁场来校正。据前所述，可以用磁场模式，而且效果应该较好。
+\end{ans}
+
+\begin{que}
+如果采用“电流模式”加磁场，电磁铁的剩磁有多大？实验中可以消除剩磁到什么水平？
+\end{que}
+\begin{ans}
+等待实验数据回答。
+\end{ans}
+
+\begin{que}
+如果采用“磁场模式”加磁场，会有剩磁问题吗？
+\end{que}
+\begin{ans}
+因为磁场模式是用负反馈使得磁场恒定，较长时间后理应不存在剩磁问题。
+\end{ans}
+
+\begin{que}
+外加磁场与电流方向的夹角不同，洛伦兹力不同，从而超导体的磁流阻大小不同，你怎么设计实验以研究磁场（矢量）对超导转变的影响？
+\end{que}
+\begin{ans}
+固定磁场大小调整电磁铁的角度分别测量$T_c$。
+\end{ans}
+
+\begin{que}
+用直流法和交流法测量电阻有何差异？
+\end{que}
+\begin{ans}
+用交流法测量电阻因为可以利用锁相放大器，测量结果可以更好地剔除噪音。
+\end{ans}
+
+\begin{que}
+直流四引线法测量中的双绞线（twisted pair）起到什么作用？用屏蔽线如何？
+\end{que}
+\begin{ans}
+双绞线可以利用反向的电流来抵消磁场电磁感应带来的影响。用屏蔽线也可以。
+\end{ans}
+
+\begin{que}
+与标准四引线法（四电极）相比，两电极四引线有何不同，请画出等效电路图，并说明在超导态能否测出零电阻。
+\end{que}
+\begin{ans}
+标准四引线法电路图如\cref{4lines}所示，两电极法相当于是把一个电源用两次，等效为一个四电极而已。在超导体依然不能测出零电阻，因为双掷开关掷向另一边后有一些多余导线，测出电阻完全为0过于理想。
+\end{ans}
+
+\begin{que}
+实验装置上的两个次级线圈不能做到对称，它们已被连接好，你又不知道单个线圈的输出是多少，如何判断测量交流磁化率的次级线圈（相对于初级线圈）是否接反以抵消本底？
+\end{que}
+\begin{ans}
+样品槽里什么都不加连接电路，锁相放大器显示的$R$应该非常接近于0（即远小于$V_0$）。
+\end{ans}
+
+\begin{que}
+交流信号包含幅值（$R$）和相位（$\theta$），或实部和虚部，由于实际制备时两个次级线圈不可能做到完全对称从而抵消本底信号，那么，
+\begin{enumerate}
+\item
+由此造成的本底信号（含幅值和相位）可以被扣除吗？
+\item
+由两对线圈完全对称假设而推出的式（E1- 18）会变成怎样？请推导。
+\item
+实部与虚部的区分依赖于相位差测量，如何扣除交流磁化率测量系统的相位差本底?
+\end{enumerate}
+\end{que}
+\begin{ans}
+\begin{enumerate}
+\item
+可以，先不加样品测一次就行了。
+\item
+假设两个反接线圈不加样品时的互感系数分别为$M,M'$，那么，加样品后测得的差分电动势
+\beq
+\varepsilon = [M-(1+\chi)M']\pfrac{I}{t}
+\eeq
+得到
+\beq
+\chi = \left(\frac{k_1k_2}{(k_1k_2)'}-1\right) - \frac{1}{(k_1k_2)'\mu_0} \frac{V_2}{C\omega V_0} [\sin (\theta-\theta_I) -i\cos (\theta-\theta_I)]
+\eeq
+\item
+按讲义里该题附图的方法测，系统本身相位差就是CH2和CH1的$\theta$值之差。
+\end{enumerate}
+\end{ans}
+
+
+\begin{que}
+如何对磁化率定标？实部或虚部能同时定标吗？
+\end{que}
+\begin{ans}
+定标需要加一个大小合适的已知磁化率的样品。可以同时定标，测出相位即可。
+\end{ans}
+
+
+\begin{que}
+交流互感一级线圈的电阻为$34\unit{\Omega}$，对于稳流源的最大输出$0.1\unit{A}$，所产生的焦尔热为$0.34\unit{W}$，它对样品温度产生多大的影响？有什么方法降低该影响？【提示，设线圈与恒温器的接触热阻为$20\unit{K/W}$。】
+\end{que}
+\begin{ans}
+升温$\Delta T = 0.34\times 20 \unit{K} = 6.8\unit{K}$，实验时应该尽量用小电流测量，并避免样品和线圈的直接接触。
+\end{ans}
+
+\begin{que}
+线圈架用材料做合适？为什么不能用金属？
+\end{que}
+\begin{ans}
+线圈架应该用顺磁性/弱抗磁性的坚固耐热材料制作，金属的磁化率过大。
+\end{ans}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+%实验记录
+%\cpic{0.255}{e2}%学生信息表格
+\newpage
+\section{实验记录}
+\begin{table}[H]
+\centering
+\begin{tabular}{|p{32mm}|p{32mm}|p{32mm}|p{32mm}|}
+\hline
+年级、专业： & 17级 物理学 & 组号： & 实验班6 \\ \hline
+姓名： & 高寒 & 学号： & 17353019 \\ \hline
+日期： &  & 实验地点： & 珠海教学楼 A102 \\ \hline
+学生签名： &  \includegraphics[scale=0.09]{sign}& 评分： &  \\ \hline
+日期： &  & 教师签名： &  \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{center}
+\LARGE{\textbf{\ExpeName}}
+\end{center}
+\subsection{【基础实验内容、步骤、结果】}
+
+\subsubsection{超导的唯象探究和超导转变温度的电阻法测量}
+\begin{enumerate}
+\item
+将金属物品尽量放离实验区域。
+\item
+连接仪器，打开真空泵。打开其他仪器和计算机。
+\item
+抽真空约30分钟，关闭真空阀门和真空泵。向液氮恒温器中加入液氮至少量溢出时旋紧中心杆并用纱布缠住出气口。
+\item
+打开Labview，设定恒定电流为$0.02\unit{A}$，初始温度从$87\unit{K}$附近开始测量到$97\unit{K}$附近，先选择正向电流，从数字万用表中读出$V_+$，再选择反向电流，从数字万用表中读出$V_-$，数据记录入\cref{table1}。
+\begin{table}[H]
+\centering
+\caption{超导转变温度的电阻测量\label{table1}}
+\begin{tabular}{|p{32mm}|p{32mm}|p{32mm}|}
+\hline
+温度$T/{\rm K}$ & 正向电压$V_+/{\rm \mu V}$ & 反向电压$V_-/{\rm \mu V}$ \\ \hline
+ & & \\ \hline
+  & & \\ \hline
+  & & \\ \hline
+   & & \\ \hline
+    & & \\ \hline
+ & & \\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+    & &\\ \hline
+  & &\\ \hline
+   & &\\ \hline
+  \end{tabular}
+  \end{table}
+ 实际表格不用全部用完，大概能够发现超导转变即可。
+ \item
+ 从上面的数据中先大概估算一下，$V_+-V_-$发生明显变化时的温度大概是$T_c \approx \uline{\hspace{10mm}} \unit{K}$。
+ \item
+ 在分析与讨论部分利用公式$R = \frac{V_+-V_-}{2I} = 25(V_+-V_-)\unit{\mu \Omega}$得到电阻随温度的变化和开始温度、中点温度、结束温度。
+  
+  \end{enumerate}
+  
+  \subsubsection{超导转变温度的交流磁化率测量}
+  \begin{enumerate}
+  \item 预期无法完成标定，实验目的也不需要完成标定。
+  \item
+   将OE4004交流稳流源input端接锁相放大器的sine out，参考信号输出设定为$V_0 = \uline{\hspace{20mm}}\unit{V}$。output端接锁相放大器的signal in，读出此时的$\theta$值作为$\theta_I = \uline{\hspace{20mm}}$。
+  \item
+  将OE4004交流稳流源input端接锁相放大器的sine out，output端接初级互感线圈，次级互感线圈接锁相放大器的signal in。
+  \item
+ 改变温度测量，从锁相放大器中读出$(R,\theta)$，如\cref{table2}。
+  \begin{table}[H]
+\centering
+\caption{超导转变温度的磁化率测量\label{table2}}
+\begin{tabular}{|p{32mm}|p{32mm}|p{32mm}|}
+\hline
+温度$T/{\rm K}$ & 输出差分电压$R/{V}$ & 输出差分电压信号幅角$\theta$ \\ \hline
+ & & \\ \hline
+  & & \\ \hline
+  & & \\ \hline
+   & & \\ \hline
+    & & \\ \hline
+ & & \\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+    & &\\ \hline
+  & &\\ \hline
+   & &\\ \hline
+  \end{tabular}
+  \end{table}
+ 实际表格不用全部用完，大概能够发现超导转变即可。
+ \item
+ 从上面的数据中先大概估算一下，$R\sin (\theta-\theta_I)$发生明显变化时的温度大概是$T_c \approx \uline{\hspace{10mm}} \unit{K}$。这个结果和用电阻法测量是否一致？
+ \item
+ 交流磁化率$\chi \propto \frac{R}{V_0 \omega} (\sin \Delta \theta + i \cos \Delta \theta)$，在数据处理时关注其实部的突然变化。
+ \end{enumerate}
+ 
+ \subsubsection{超导转变温度随外磁场的关系探究}
+ \begin{enumerate}
+ \item
+ 先完成磁场的标定。电磁场选择FIELD模式，先将磁场设定为0，等待一段时间进行消磁。
+ \item
+ 将霍尔探头/特斯拉计放在样品槽中心位置，从0开始加大电磁铁的设定磁场，并稳定后读出霍尔探头/特斯拉计的读数值，如\cref{table3}。
+ \begin{table}[H]
+\centering
+\caption{磁场标定\label{table3}}
+\begin{tabular}{|p{32mm}|p{32mm}|}
+\hline
+电磁铁设定磁场$B_0/{\rm T}$ & 样品中心位置磁场$B_1/{\rm T}$ \\ \hline
+0 & \\ \hline
+0.4  & \\ \hline
+0.8   & \\ \hline
+1.2   & \\ \hline
+1.6  & \\ \hline
+2.0  & \\ \hline
+2.4    &\\ \hline
+2.8    &\\ \hline
+3.2    &\\ \hline
+ 3.6   &\\ \hline
+4.0    &\\ \hline
+4.4    &\\ \hline
+4.8    &\\ \hline
+5.2    &\\ \hline
+5.6    &\\ \hline
+6.0    &\\ \hline
+  \end{tabular}
+  \end{table} 
+  \item
+  为了减小等待时间，避免重新消磁带来的等待时间，我们从大往小测。
+ \item
+ 因为电流也会对超导转变温度产生影响，因此我们选择用交流磁化率法测量。
+\item
+   将OE4004交流稳流源input端接锁相放大器的sine out，参考信号输出设定为$V_0 = \uline{\hspace{20mm}}\unit{V}$。output端接锁相放大器的signal in，读出此时的$\theta$值作为$\theta_I = \uline{\hspace{20mm}}$。
+  \item
+  将OE4004交流稳流源input端接锁相放大器的sine out，output端接初级互感线圈，次级互感线圈接锁相放大器的signal in。
+  \item
+设定$B_0 = 6.0\unit{T}$，改变温度测量（参考范围$88\pm5\unit{K}$） ，从锁相放大器中读出$(R,\theta)$，如\cref{table4}。
+  \begin{table}[H]
+\centering
+\caption{$B_0 = 6.0\unit{T}$，超导转变温度的磁化率测量\label{table4}}
+\begin{tabular}{|p{32mm}|p{32mm}|p{32mm}|}
+\hline
+温度$T/{\rm K}$ & 输出差分电压$R/{V}$ & 输出差分电压信号幅角$\theta$ \\ \hline
+& & \\ \hline
+  & & \\ \hline
+& & \\ \hline
+   & & \\ \hline
+    & & \\ \hline
+ & & \\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  \end{tabular}
+  \end{table}
+ 
+ \item
+ 从上面的测量结果估计该磁场下的超导转变温度$T = \uline{\hspace{20mm}}\unit{K}$，下面的测量在比这个温度稍大的中心温度附近继续精确测量。
+   \item
+设定$B_0 = 5.0\unit{T}$，改变温度测量 ，从锁相放大器中读出$(R,\theta)$，如\cref{table5}。
+  \begin{table}[H]
+\centering
+\caption{$B_0 = 5.0\unit{T}$，超导转变温度的磁化率测量\label{table5}}
+\begin{tabular}{|p{32mm}|p{32mm}|p{32mm}|}
+\hline
+温度$T/{\rm K}$ & 输出差分电压$R/{V}$ & 输出差分电压信号幅角$\theta$ \\ \hline
+& & \\ \hline
+  & & \\ \hline
+& & \\ \hline
+   & & \\ \hline
+    & & \\ \hline
+ & & \\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  \end{tabular}
+  \end{table}
+     \item
+继续稍加大中心温度，设定$B_0 = 4.0\unit{T}$，改变温度测量 ，从锁相放大器中读出$(R,\theta)$，如\cref{table6}。
+  \begin{table}[H]
+\centering
+\caption{$B_0 = 4.0\unit{T}$，超导转变温度的磁化率测量\label{table6}}
+\begin{tabular}{|p{32mm}|p{32mm}|p{32mm}|}
+\hline
+温度$T/{\rm K}$ & 输出差分电压$R/{V}$ & 输出差分电压信号幅角$\theta$ \\ \hline
+& & \\ \hline
+  & & \\ \hline
+& & \\ \hline
+   & & \\ \hline
+    & & \\ \hline
+ & & \\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  \end{tabular}
+  \end{table}
+  \item
+继续稍加大中心温度，设定$B_0 = 3.0\unit{T}$，改变温度测量 ，从锁相放大器中读出$(R,\theta)$，如\cref{table7}。
+  \begin{table}[H]
+\centering
+\caption{$B_0 = 3.0\unit{T}$，超导转变温度的磁化率测量\label{table7}}
+\begin{tabular}{|p{32mm}|p{32mm}|p{32mm}|}
+\hline
+温度$T/{\rm K}$ & 输出差分电压$R/{V}$ & 输出差分电压信号幅角$\theta$ \\ \hline
+& & \\ \hline
+  & & \\ \hline
+& & \\ \hline
+   & & \\ \hline
+    & & \\ \hline
+ & & \\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  \end{tabular}
+  \end{table}
+  \item
+继续稍加大中心温度，设定$B_0 = 2.0\unit{T}$，改变温度测量 ，从锁相放大器中读出$(R,\theta)$，如\cref{table8}。
+  \begin{table}[H]
+\centering
+\caption{$B_0 = 2.0\unit{T}$，超导转变温度的磁化率测量\label{table8}}
+\begin{tabular}{|p{32mm}|p{32mm}|p{32mm}|}
+\hline
+温度$T/{\rm K}$ & 输出差分电压$R/{V}$ & 输出差分电压信号幅角$\theta$ \\ \hline
+& & \\ \hline
+  & & \\ \hline
+& & \\ \hline
+   & & \\ \hline
+    & & \\ \hline
+ & & \\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  \end{tabular}
+  \end{table}
+ \item
+ 继续稍加大中心温度，设定$B_0 = 1.5\unit{T}$，改变温度测量 ，从锁相放大器中读出$(R,\theta)$，如\cref{table9}。
+  \begin{table}[H]
+\centering
+\caption{$B_0 = 1.5\unit{T}$，超导转变温度的磁化率测量\label{table9}}
+\begin{tabular}{|p{32mm}|p{32mm}|p{32mm}|}
+\hline
+温度$T/{\rm K}$ & 输出差分电压$R/{V}$ & 输出差分电压信号幅角$\theta$ \\ \hline
+& & \\ \hline
+  & & \\ \hline
+& & \\ \hline
+   & & \\ \hline
+    & & \\ \hline
+ & & \\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  \end{tabular}
+  \end{table}
+ 
+  \item
+ 继续稍加大中心温度，设定$B_0 = 1.0\unit{T}$，改变温度测量 ，从锁相放大器中读出$(R,\theta)$，如\cref{table10}。
+  \begin{table}[H]
+\centering
+\caption{$B_0 = 1.0\unit{T}$，超导转变温度的磁化率测量\label{table10}}
+\begin{tabular}{|p{32mm}|p{32mm}|p{32mm}|}
+\hline
+温度$T/{\rm K}$ & 输出差分电压$R/{V}$ & 输出差分电压信号幅角$\theta$ \\ \hline
+& & \\ \hline
+  & & \\ \hline
+& & \\ \hline
+   & & \\ \hline
+    & & \\ \hline
+ & & \\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  \end{tabular}
+  \end{table}
+  
+  \item
+ 继续稍加大中心温度，设定$B_0 = 0.5\unit{T}$，改变温度测量 ，从锁相放大器中读出$(R,\theta)$，如\cref{table11}。
+  \begin{table}[H]
+\centering
+\caption{$B_0 = 0.5\unit{T}$，超导转变温度的磁化率测量\label{table11}}
+\begin{tabular}{|p{32mm}|p{32mm}|p{32mm}|}
+\hline
+温度$T/{\rm K}$ & 输出差分电压$R/{V}$ & 输出差分电压信号幅角$\theta$ \\ \hline
+& & \\ \hline
+  & & \\ \hline
+& & \\ \hline
+   & & \\ \hline
+    & & \\ \hline
+ & & \\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  \end{tabular}
+  \end{table}
+
+  \item
+ 继续稍加大中心温度，设定$B_0 = 0\unit{T}$，改变温度测量 ，从锁相放大器中读出$(R,\theta)$，如\cref{table12}。
+  \begin{table}[H]
+\centering
+\caption{$B_0 = 0\unit{T}$，超导转变温度的磁化率测量\label{table12}}
+\begin{tabular}{|p{32mm}|p{32mm}|p{32mm}|}
+\hline
+温度$T/{\rm K}$ & 输出差分电压$R/{V}$ & 输出差分电压信号幅角$\theta$ \\ \hline
+& & \\ \hline
+  & & \\ \hline
+& & \\ \hline
+   & & \\ \hline
+    & & \\ \hline
+ & & \\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  \end{tabular}
+  \end{table}
+  \end{enumerate}
+  
+\subsection{【设计性实验内容、步骤、结果】}
+\subsubsection{电阻变化的临界指数测量}
+\begin{enumerate}
+\item
+打开电磁铁，用FIELD模式将磁场设定为0进行完全消除。用霍尔探头/特斯拉计确认样品中心位置的磁场确实非常小。
+\item
+打开Labview，设定恒定电流为$0.01\unit{A}$，初始温度从之前测出的$T_c$之前的$1\unit{K}$开始测量到$T_c + 3\unit{K}$附近，先选择正向电流，从数字万用表中读出$V_+$，再选择反向电流，从数字万用表中读出$V_-$。分别用升温测量和降温测量反复测量共4组数据数据记录入\cref{tableex1,tableex2,tableex3,tableex4}。
+\begin{table}[H]
+\centering
+\caption{电阻变化的临界指数测量\label{tableex1}，第一次升温测量}
+\begin{tabular}{|p{32mm}|p{32mm}|p{32mm}|}
+\hline
+温度$T/{\rm K}$ & 正向电压$V_+/{\rm \mu V}$ & 反向电压$V_-/{\rm \mu V}$ \\ \hline
+ & & \\ \hline
+  & & \\ \hline
+  & & \\ \hline
+   & & \\ \hline
+    & & \\ \hline
+ & & \\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+    & &\\ \hline
+  & &\\ \hline
+   & &\\ \hline
+     &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+    & &\\ \hline
+  & &\\ \hline
+   & &\\ \hline
+  \end{tabular}
+  \end{table}
+\begin{table}[H]
+\centering
+\caption{电阻变化的临界指数测量\label{tableex2}，第一次降温测量}
+\begin{tabular}{|p{32mm}|p{32mm}|p{32mm}|}
+\hline
+温度$T/{\rm K}$ & 正向电压$V_+/{\rm \mu V}$ & 反向电压$V_-/{\rm \mu V}$ \\ \hline
+ & & \\ \hline
+  & & \\ \hline
+  & & \\ \hline
+   & & \\ \hline
+    & & \\ \hline
+ & & \\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+    & &\\ \hline
+  & &\\ \hline
+   & &\\ \hline
+     &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+    & &\\ \hline
+  & &\\ \hline
+   & &\\ \hline
+  \end{tabular}
+  \end{table}
+\begin{table}[H]
+\centering
+\caption{电阻变化的临界指数测量\label{tableex3}，第二次升温测量}
+\begin{tabular}{|p{32mm}|p{32mm}|p{32mm}|}
+\hline
+温度$T/{\rm K}$ & 正向电压$V_+/{\rm \mu V}$ & 反向电压$V_-/{\rm \mu V}$ \\ \hline
+ & & \\ \hline
+  & & \\ \hline
+  & & \\ \hline
+   & & \\ \hline
+    & & \\ \hline
+ & & \\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+    & &\\ \hline
+  & &\\ \hline
+   & &\\ \hline
+     &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+    & &\\ \hline
+  & &\\ \hline
+   & &\\ \hline
+  \end{tabular}
+  \end{table}
+\begin{table}[H]
+\centering
+\caption{电阻变化的临界指数测量\label{tableex4}，第二次降温测量}
+\begin{tabular}{|p{32mm}|p{32mm}|p{32mm}|}
+\hline
+温度$T/{\rm K}$ & 正向电压$V_+/{\rm \mu V}$ & 反向电压$V_-/{\rm \mu V}$ \\ \hline
+ & & \\ \hline
+  & & \\ \hline
+  & & \\ \hline
+   & & \\ \hline
+    & & \\ \hline
+ & & \\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+    & &\\ \hline
+  & &\\ \hline
+   & &\\ \hline
+     &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+    & &\\ \hline
+  & &\\ \hline
+   & &\\ \hline
+  \end{tabular}
+  \end{table}
+  \end{enumerate}
+
+\subsubsection{磁化率温度变化的临界指数测量}
+  \begin{enumerate}
+  \item
+  因为磁化率测量不用引入外电流，可以更加严格保证测量的是一个二级相变的过程。因此我们花更多的时间进行进行磁化率测量。
+  \item
+  继续保证样品中心位置磁场极小。
+  \item
+   将OE4004交流稳流源input端接锁相放大器的sine out，参考信号输出设定为$V_0 = \uline{\hspace{20mm}}\unit{V}$。output端接锁相放大器的signal in，读出此时的$\theta$值作为$\theta_I = \uline{\hspace{20mm}}$。
+  \item
+  将OE4004交流稳流源input端接锁相放大器的sine out，output端接初级互感线圈，次级互感线圈接锁相放大器的signal in。
+  \item
+ 初始温度从之前测出的$T_c$之前的$1\unit{K}$开始测量到$T_c + 3\unit{K}$附近改变温度测量，从锁相放大器中读出$(R,\theta)$。升温和降温测量共进行6次，结果如\cref{tabley1,tabley2,tabley3,tabley4,tabley5,tabley6}。
+  \begin{table}[H]
+\centering
+\caption{磁化率变化的临界指数测量，第一次升温测量\label{tabley1}}
+\begin{tabular}{|p{32mm}|p{32mm}|p{32mm}|}
+\hline
+温度$T/{\rm K}$ & 输出差分电压$R/{V}$ & 输出差分电压信号幅角$\theta$ \\ \hline
+ & & \\ \hline
+  & & \\ \hline
+  & & \\ \hline
+   & & \\ \hline
+    & & \\ \hline
+ & & \\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+    & &\\ \hline
+  & &\\ \hline
+   & &\\ \hline
+     &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+    & &\\ \hline
+  & &\\ \hline
+   & &\\ \hline
+  \end{tabular}
+  \end{table}
+    \begin{table}[H]
+\centering
+\caption{磁化率变化的临界指数测量，第一次降温测量\label{tabley2}}
+\begin{tabular}{|p{32mm}|p{32mm}|p{32mm}|}
+\hline
+温度$T/{\rm K}$ & 输出差分电压$R/{V}$ & 输出差分电压信号幅角$\theta$ \\ \hline
+ & & \\ \hline
+  & & \\ \hline
+  & & \\ \hline
+   & & \\ \hline
+    & & \\ \hline
+ & & \\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+    & &\\ \hline
+  & &\\ \hline
+   & &\\ \hline
+     &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+    & &\\ \hline
+  & &\\ \hline
+   & &\\ \hline
+  \end{tabular}
+  \end{table}
+  
+    \begin{table}[H]
+\centering
+\caption{磁化率变化的临界指数测量，第二次降温测量\label{tabley3}}
+\begin{tabular}{|p{32mm}|p{32mm}|p{32mm}|}
+\hline
+温度$T/{\rm K}$ & 输出差分电压$R/{V}$ & 输出差分电压信号幅角$\theta$ \\ \hline
+ & & \\ \hline
+  & & \\ \hline
+  & & \\ \hline
+   & & \\ \hline
+    & & \\ \hline
+ & & \\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+    & &\\ \hline
+  & &\\ \hline
+   & &\\ \hline
+     &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+    & &\\ \hline
+  & &\\ \hline
+   & &\\ \hline
+  \end{tabular}
+  \end{table}
+  
+     \begin{table}[H]
+\centering
+\caption{磁化率变化的临界指数测量，第二次升温测量\label{tabley4}}
+\begin{tabular}{|p{32mm}|p{32mm}|p{32mm}|}
+\hline
+温度$T/{\rm K}$ & 输出差分电压$R/{V}$ & 输出差分电压信号幅角$\theta$ \\ \hline
+ & & \\ \hline
+  & & \\ \hline
+  & & \\ \hline
+   & & \\ \hline
+    & & \\ \hline
+ & & \\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+    & &\\ \hline
+  & &\\ \hline
+   & &\\ \hline
+     &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+    & &\\ \hline
+  & &\\ \hline
+   & &\\ \hline
+  \end{tabular}
+  \end{table}
+      \begin{table}[H]
+\centering
+\caption{磁化率变化的临界指数测量，第三次降温测量\label{tabley5}}
+\begin{tabular}{|p{32mm}|p{32mm}|p{32mm}|}
+\hline
+温度$T/{\rm K}$ & 输出差分电压$R/{V}$ & 输出差分电压信号幅角$\theta$ \\ \hline
+ & & \\ \hline
+  & & \\ \hline
+  & & \\ \hline
+   & & \\ \hline
+    & & \\ \hline
+ & & \\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+    & &\\ \hline
+  & &\\ \hline
+   & &\\ \hline
+     &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+    & &\\ \hline
+  & &\\ \hline
+   & &\\ \hline
+  \end{tabular}
+  \end{table}
+      \begin{table}[H]
+\centering
+\caption{磁化率变化的临界指数测量，第三次升温测量\label{tabley6}}
+\begin{tabular}{|p{32mm}|p{32mm}|p{32mm}|}
+\hline
+温度$T/{\rm K}$ & 输出差分电压$R/{V}$ & 输出差分电压信号幅角$\theta$ \\ \hline
+ & & \\ \hline
+  & & \\ \hline
+  & & \\ \hline
+   & & \\ \hline
+    & & \\ \hline
+ & & \\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+    & &\\ \hline
+  & &\\ \hline
+   & &\\ \hline
+     &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+    & &\\ \hline
+  & &\\ \hline
+   & &\\ \hline
+  \end{tabular}
+  \end{table}
+ \end{enumerate}
+\subsubsection{探究临界温度下磁化率磁场变化的临界指数}
+\subsubsection{磁化率温度变化的临界指数测量}
+  \begin{enumerate}
+  \item
+  继续保证样品中心位置磁场极小。
+  \item
+   将OE4004交流稳流源input端接锁相放大器的sine out，参考信号输出设定为$V_0 = \uline{\hspace{20mm}}\unit{V}$。output端接锁相放大器的signal in，读出此时的$\theta$值作为$\theta_I = \uline{\hspace{20mm}}$。
+  \item
+  将OE4004交流稳流源input端接锁相放大器的sine out，output端接初级互感线圈，次级互感线圈接锁相放大器的signal in。
+  \item
+ 固定温度在之前零磁场下测得的$T_c$，用FIELD模式将磁场从0增加到$5\unit{T}$，结果如\cref{tableu}。
+  \begin{table}[H]
+\centering
+\caption{临界温度下磁化率磁场变化\label{tableu}}
+\begin{tabular}{|p{32mm}|p{32mm}|p{32mm}|}
+\hline
+磁场$B_0/{\rm T}$ & 输出差分电压$R/{V}$ & 输出差分电压信号幅角$\theta$ \\ \hline
+0.0 & & \\ \hline
+  & & \\ \hline
+  & & \\ \hline
+   & & \\ \hline
+    & & \\ \hline
+ & & \\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+    & &\\ \hline
+  & &\\ \hline
+   & &\\ \hline
+     &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+    & &\\ \hline
+  & &\\ \hline
+   & &\\ \hline
+  \end{tabular}
+  \end{table}
+ \end{enumerate}
+\subsubsection{探究一级相变和二级相变间的区别}
+  \begin{enumerate}
+  \item
+  将电磁铁设定磁场调到$B_0 = 5.0\unit{T}$。
+  \item
+   将OE4004交流稳流源input端接锁相放大器的sine out，参考信号输出设定为$V_0 = \uline{\hspace{20mm}}\unit{V}$。output端接锁相放大器的signal in，读出此时的$\theta$值作为$\theta_I = \uline{\hspace{20mm}}$。
+  \item
+  将OE4004交流稳流源input端接锁相放大器的sine out，output端接初级互感线圈，次级互感线圈接锁相放大器的signal in。
+  \item
+ 初始温度从之前测出的$T(B_0=5.0\unit{T})$之前的$1\unit{K}$开始测量到$T(B_0=5.0\unit{T}) + 3\unit{K}$附近改变温度测量，从锁相放大器中读出$(R,\theta)$。升温和降温测量共进行6次，结果如\cref{tablez1,tablez2,tablez3,tablez4,tablez5,tablez6}。
+  \begin{table}[H]
+\centering
+\caption{一级相变时磁化率测量，第一次升温测量\label{tablez1}}
+\begin{tabular}{|p{32mm}|p{32mm}|p{32mm}|}
+\hline
+温度$T/{\rm K}$ & 输出差分电压$R/{V}$ & 输出差分电压信号幅角$\theta$ \\ \hline
+ & & \\ \hline
+  & & \\ \hline
+  & & \\ \hline
+   & & \\ \hline
+    & & \\ \hline
+ & & \\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+    & &\\ \hline
+  & &\\ \hline
+   & &\\ \hline
+     &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+    & &\\ \hline
+  & &\\ \hline
+   & &\\ \hline
+  \end{tabular}
+  \end{table}
+    \begin{table}[H]
+\centering
+\caption{一级相变时磁化率测量，第一次降温测量\label{tablez2}}
+\begin{tabular}{|p{32mm}|p{32mm}|p{32mm}|}
+\hline
+温度$T/{\rm K}$ & 输出差分电压$R/{V}$ & 输出差分电压信号幅角$\theta$ \\ \hline
+ & & \\ \hline
+  & & \\ \hline
+  & & \\ \hline
+   & & \\ \hline
+    & & \\ \hline
+ & & \\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+    & &\\ \hline
+  & &\\ \hline
+   & &\\ \hline
+     &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+    & &\\ \hline
+  & &\\ \hline
+   & &\\ \hline
+  \end{tabular}
+  \end{table}
+  
+    \begin{table}[H]
+\centering
+\caption{一级相变时磁化率测量，第二次降温测量\label{tablez3}}
+\begin{tabular}{|p{32mm}|p{32mm}|p{32mm}|}
+\hline
+温度$T/{\rm K}$ & 输出差分电压$R/{V}$ & 输出差分电压信号幅角$\theta$ \\ \hline
+ & & \\ \hline
+  & & \\ \hline
+  & & \\ \hline
+   & & \\ \hline
+    & & \\ \hline
+ & & \\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+    & &\\ \hline
+  & &\\ \hline
+   & &\\ \hline
+     &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+    & &\\ \hline
+  & &\\ \hline
+   & &\\ \hline
+  \end{tabular}
+  \end{table}
+  
+     \begin{table}[H]
+\centering
+\caption{一级相变时磁化率测量，第二次升温测量\label{tablez4}}
+\begin{tabular}{|p{32mm}|p{32mm}|p{32mm}|}
+\hline
+温度$T/{\rm K}$ & 输出差分电压$R/{V}$ & 输出差分电压信号幅角$\theta$ \\ \hline
+ & & \\ \hline
+  & & \\ \hline
+  & & \\ \hline
+   & & \\ \hline
+    & & \\ \hline
+ & & \\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+    & &\\ \hline
+  & &\\ \hline
+   & &\\ \hline
+     &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+    & &\\ \hline
+  & &\\ \hline
+   & &\\ \hline
+  \end{tabular}
+  \end{table}
+      \begin{table}[H]
+\centering
+\caption{一级相变时磁化率测量，第三次降温测量\label{tablez5}}
+\begin{tabular}{|p{32mm}|p{32mm}|p{32mm}|}
+\hline
+温度$T/{\rm K}$ & 输出差分电压$R/{V}$ & 输出差分电压信号幅角$\theta$ \\ \hline
+ & & \\ \hline
+  & & \\ \hline
+  & & \\ \hline
+   & & \\ \hline
+    & & \\ \hline
+ & & \\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+    & &\\ \hline
+  & &\\ \hline
+   & &\\ \hline
+     &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+    & &\\ \hline
+  & &\\ \hline
+   & &\\ \hline
+  \end{tabular}
+  \end{table}
+      \begin{table}[H]
+\centering
+\caption{一级相变时磁化率测量，第三次升温测量\label{tablez6}}
+\begin{tabular}{|p{32mm}|p{32mm}|p{32mm}|}
+\hline
+温度$T/{\rm K}$ & 输出差分电压$R/{V}$ & 输出差分电压信号幅角$\theta$ \\ \hline
+ & & \\ \hline
+  & & \\ \hline
+  & & \\ \hline
+   & & \\ \hline
+    & & \\ \hline
+ & & \\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+    & &\\ \hline
+  & &\\ \hline
+   & &\\ \hline
+     &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+  &  &\\ \hline
+    & &\\ \hline
+  & &\\ \hline
+   & &\\ \hline
+  \end{tabular}
+  \end{table}
+ \end{enumerate}
+
+
+\subsection{【实验过程中遇到问题记录】}\par
+\cpic{0.81}{none}
+%生成最终报告时将上面内容全部删除或注释（用\iffalse \fi），将扫描得到的实验报告保存为Record.pdf在LaTeX model for GPL下，将下行命令的注释号删去。注意根据实际页数调整pages参数。
+%\includepdf[pages=1-9]{Record}
+
+
+\newpage%分析与讨论
+%\cpic{0.255}{e3}%学生信息表格
+\begin{table}[H]
+\centering
+\begin{tabular}{|p{32mm}|p{32mm}|p{32mm}|p{32mm}|}
+\hline
+年级、专业： & 17级 物理学 & 组号： & 实验班6 \\ \hline
+姓名： & 高寒 & 学号： & 17353019 \\ \hline
+日期： & \today &  &  \\ \hline
+评分： &  & 教师签名： &  \\ \hline
+\end{tabular}
+\end{table}
+\begin{center}
+\LARGE\textbf{{\ExpeName}}
+\end{center}
+\textbf{【分析与讨论】}\\
+
+\newpage
+\bibliographystyle{IEEEtran}
+\bibliography{model.bib}
+
+\end{document}

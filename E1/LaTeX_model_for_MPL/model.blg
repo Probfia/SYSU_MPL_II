@@ -1,0 +1,70 @@
+This is BibTeX, Version 0.99d (TeX Live 2019)
+Capacity: max_strings=100000, hash_size=100000, hash_prime=85009
+The top-level auxiliary file: model.aux
+The style file: IEEEtran.bst
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated wiz_functions (elt_size=4) to 6000 items from 3000.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Database file #1: model.bib
+I was expecting a `,' or a `}'---line 256 of file model.bib
+ : 
+ : publisher = {高等教育出版社},
+(Error may have been on previous line)
+I'm skipping whatever remains of this entry
+Warning--I didn't find a database entry for "ssp"
+-- IEEEtran.bst version 1.14 (2015/08/26) by Michael Shell.
+-- http://www.michaelshell.org/tex/ieeetran/bibtex/
+-- See the "IEEEtran_bst_HOWTO.pdf" manual for usage information.
+Warning--empty year in qftga
+Warning--empty year in cmft
+Warning--empty year in azqft
+Warning--empty year in ed
+Warning--missing publisher in tdstat
+Warning--empty year in tdstat
+Warning--empty year in stat1
+
+Done.
+You've used 9 entries,
+            4087 wiz_defined-function locations,
+            861 strings with 8168 characters,
+and the built_in function-call counts, 3336 in all, are:
+= -- 217
+> -- 57
+< -- 7
++ -- 24
+- -- 12
+* -- 132
+:= -- 566
+add.period$ -- 17
+call.type$ -- 9
+change.case$ -- 5
+chr.to.int$ -- 18
+cite$ -- 16
+duplicate$ -- 280
+empty$ -- 385
+format.name$ -- 15
+if$ -- 757
+int.to.chr$ -- 0
+int.to.str$ -- 9
+missing$ -- 46
+newline$ -- 50
+num.names$ -- 9
+pop$ -- 145
+preamble$ -- 1
+purify$ -- 0
+quote$ -- 2
+skip$ -- 271
+stack$ -- 0
+substring$ -- 20
+swap$ -- 137
+text.length$ -- 1
+text.prefix$ -- 0
+top$ -- 5
+type$ -- 9
+warning$ -- 7
+while$ -- 12
+width$ -- 10
+write$ -- 85
+(There was 1 error message)
